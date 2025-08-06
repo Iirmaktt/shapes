@@ -7,12 +7,10 @@ import Canvas from './components/Canvas';
 function App() {
   return (
     <WebSocketProvider>
-      <div className="app">
+      <div>
         <Header />
         <Controls />
-        <main className="main-content">
-          <Canvas />
-        </main>
+        <Canvas />
       </div>
     </WebSocketProvider>
   );

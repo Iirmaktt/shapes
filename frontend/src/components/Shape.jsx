@@ -4,7 +4,6 @@ const Shape = memo(({ shape }) => {
   const shapeRef = useRef(null);
   
   useEffect(() => {
-    // Direct DOM manipulation for better performance
     const element = shapeRef.current;
     if (element) {
       element.style.transform = `translate(${shape.x}px, ${shape.y}px)`;
@@ -17,7 +16,6 @@ const Shape = memo(({ shape }) => {
       height: `${shape.size}px`,
       backgroundColor: shape.color,
       position: 'absolute',
-      transition: 'none',
     };
     
     if (shape.type === 'triangle') {
@@ -42,9 +40,7 @@ const Shape = memo(({ shape }) => {
   return (
     <div
       ref={shapeRef}
-      className={`shape ${shape.type} ${shape.isMoving ? 'moving' : ''}`}
       style={getShapeStyle()}
-      data-shape-id={shape.id}
     />
   );
 });

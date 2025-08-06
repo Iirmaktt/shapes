@@ -20,58 +20,21 @@ const Controls = () => {
   };
   
   return (
-    <div className="controls">
-      <div className="shape-controls">
-        <label>
-          Circles:
-          <input
-            type="number"
-            min="0"
-            max="50"
-            value={circles}
-            onChange={(e) => setCircles(parseInt(e.target.value) || 0)}
-          />
-        </label>
-      </div>
-      
-      <div className="shape-controls">
-        <label>
-          Squares:
-          <input
-            type="number"
-            min="0"
-            max="50"
-            value={squares}
-            onChange={(e) => setSquares(parseInt(e.target.value) || 0)}
-          />
-        </label>
-      </div>
-      
-      <div className="shape-controls">
-        <label>
-          Triangles:
-          <input
-            type="number"
-            min="0"
-            max="50"
-            value={triangles}
-            onChange={(e) => setTriangles(parseInt(e.target.value) || 0)}
-          />
-        </label>
-      </div>
-      
-      <button
-        className="update-button"
-        onClick={handleUpdateShapes}
-        disabled={isUpdating}
-      >
+    <div>
+      <label>
+        Circles: <input type="number" min="0" max="50" value={circles} onChange={(e) => setCircles(parseInt(e.target.value) || 0)} />
+      </label>
+      <label>
+        Squares: <input type="number" min="0" max="50" value={squares} onChange={(e) => setSquares(parseInt(e.target.value) || 0)} />
+      </label>
+      <label>
+        Triangles: <input type="number" min="0" max="50" value={triangles} onChange={(e) => setTriangles(parseInt(e.target.value) || 0)} />
+      </label>
+      <button onClick={handleUpdateShapes} disabled={isUpdating}>
         {isUpdating ? 'Updating...' : 'Update Shapes'}
       </button>
-      
-      <div className="stats">
-        <span>Total: {stats.total}</span>
-        <span>Moving: {stats.moving}</span>
-        <span>Static: {stats.total - stats.moving}</span>
+      <div>
+        Total: {stats.total} | Moving: {stats.moving} | Static: {stats.total - stats.moving}
       </div>
     </div>
   );
