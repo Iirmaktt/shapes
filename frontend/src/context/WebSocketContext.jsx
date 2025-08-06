@@ -1,27 +1,45 @@
+// React kütüphanesini ve gerekli hook'ları import et
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
+// WebSocket bağlantısı için SockJS (fallback desteği ile)
 import SockJS from 'sockjs-client';
+// STOMP protokolü için (WebSocket üzerinde mesajlaşma)
 import Stomp from 'stompjs';
 
+// WebSocket verilerini paylaşmak için React Context oluştur
 const WebSocketContext = createContext(null);
 
+/**
+ * WebSocket hook'u - Context'e erişim sağlar
+ * Bu hook'u kullanan bileşenler WebSocket verilerine erişebilir
+ * @returns {Object} WebSocket context değerleri
+ */
 export const useWebSocket = () => {
   const context = useContext(WebSocketContext);
   if (!context) {
+    // Eğer hook Provider dışında kullanılırsa hata fırlat
     throw new Error('useWebSocket must be used within a WebSocketProvider');
   }
   return context;
 };
 
+/**
+ * WebSocket Provider bileşeni
+ * Tüm uygulamaya WebSocket bağlantısını ve verilerini sağlar
+ * @param {Object} props - React props
+ * @param {ReactNode} props.children - Alt bileşenler
+ */
 export const WebSocketProvider = ({ children }) => {
-  const [isConnected, setIsConnected] = useState(false);
-  const [shapes, setShapes] = useState([]);
-  const [panelInfo, setPanelInfo] = useState(null); // Start as null to indicate not loaded
-  const [stats, setStats] = useState({ total: 0, moving: 0 });
-  const [isInitialized, setIsInitialized] = useState(false); // Track if we got initial data
+  // State tanımlamaları
+  const [isConnected, setIsConnected] = useState(false);        // Bağlantı durumu
+  const [shapes, setShapes] = useState([]);                     // Şekiller listesi
+  const [panelInfo, setPanelInfo] = useState(null);             // Panel boyutları (null = henüz gelmedi)
+  const [stats, setStats] = useState({ total: 0, moving: 0 }); // İstatistikler
+  const [isInitialized, setIsInitialized] = useState(false);   // Panel bilgisi geldi mi?
   
-  const stompClientRef = useRef(null);
-  const reconnectTimeoutRef = useRef(null);
-  const reconnectAttempts = useRef(0);
+  // Ref'ler (component yaşam döngüsü boyunca kalıcı değerler)
+  const stompClientRef = useRef(null);        // STOMP client referansı
+  const reconnectTimeoutRef = useRef(null);   // Yeniden bağlanma zamanlayıcısı
+  const reconnectAttempts = useRef(0);        // Yeniden bağlanma deneme sayısı
   
   const connectWebSocket = useCallback(() => {
     try {

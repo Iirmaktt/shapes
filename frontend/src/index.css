@@ -1,16 +1,21 @@
-/* Minimal CSS - Basic reset and simple styling */
+/* Ana CSS Dosyası - Minimal stil ve temel resetler */
+/* Bu dosya uygulamanın genel görünümünü ve canvas stillerini belirler */
+
+/* Tüm elementler için temel CSS reset */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Padding ve border'ın width hesaplamasına dahil edilmesi */
 }
 
+/* Sayfa gövdesi için temel stiller */
 body {
-  font-family: Arial, sans-serif;
-  background: white;
+  font-family: Arial, sans-serif; /* Temiz ve okunabilir font */
+  background: white; /* Beyaz arka plan */
 }
 
+/* Canvas container stili */
 .canvas {
-  border: 1px solid black;
-  position: relative;
+  border: 1px solid black; /* Belirgin sınır çizgisi */
+  position: relative; /* Şekillerin absolute pozisyonlanması için */
 }

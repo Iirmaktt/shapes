@@ -8,22 +8,38 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 
-@Controller
+/**
+ * WebSocket kontrolcüsü
+ * İstemci bağlantılarını yönetir ve panel bilgilerini gönderir
+ */
+@Controller // Spring MVC kontrolcüsü olarak işaretler
 public class WebSocketController {
     
+    // ShapeService'i otomatik olarak enjekte et
     @Autowired
     private ShapeService shapeService;
     
-    @EventListener
+    /**
+     * WebSocket bağlantı olayını dinler
+     * Yeni bir istemci bağlandığında otomatik olarak çağrılır
+     * 
+     * @param event Bağlantı olayı bilgileri
+     */
+    @EventListener // Spring olay dinleyicisi
     public void handleWebSocketConnectListener(SessionConnectEvent event) {
-        // Send panel info to new client
+        // Yeni bağlanan istemciye panel bilgilerini gönder
+        // Panel boyutları (1000x800) ilk mesaj olarak iletilir
         shapeService.sendPanelInfo();
     }
     
-    @MessageMapping("/connect")
-    @SendTo("/topic/shapes")
+    /**
+     * İstemci açık olarak bağlantı isteği gönderdiğinde çağrılır
+     * /app/connect adresine gelen mesajları yakalar
+     */
+    @MessageMapping("/connect") // WebSocket mesaj yönlendirmesi
+    @SendTo("/topic/shapes")    // Yanıtı /topic/shapes kanalına gönder
     public void handleConnect() {
-        // Send panel info when client explicitly connects
+        // İstemci manuel bağlantı talebinde panel bilgilerini gönder
         shapeService.sendPanelInfo();
     }
 }
