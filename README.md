@@ -88,9 +88,16 @@ simsoft/
 ## Installation and Running
 
 ### Prerequisites
-- **Java**: Version 17 or higher (Java 21 detected and working)
+- **Java**: Version 17 or higher (tested with OpenJDK 21)
 - **Node.js**: Version 16 or higher
 - **npm**: Version 7 or higher
+
+### Development Environment
+- **IDE**: Visual Studio Code (recommended) or IntelliJ IDEA
+- **Java Version**: OpenJDK 21 (compatible with Java 17+)
+- **Build Tool**: Maven 3.9.6 (via Maven wrapper - ./mvnw)
+- **Frontend Framework**: React 18 with Vite 5.4
+- **WebSocket**: STOMP over SockJS protocol
 
 ### Quick Start
 
