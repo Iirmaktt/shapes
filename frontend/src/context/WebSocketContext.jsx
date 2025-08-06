@@ -15,8 +15,9 @@ export const useWebSocket = () => {
 export const WebSocketProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [shapes, setShapes] = useState([]);
-  const [panelInfo, setPanelInfo] = useState({ width: 1000, height: 800 });
+  const [panelInfo, setPanelInfo] = useState(null); // Start as null to indicate not loaded
   const [stats, setStats] = useState({ total: 0, moving: 0 });
+  const [isInitialized, setIsInitialized] = useState(false); // Track if we got initial data
   
   const stompClientRef = useRef(null);
   const reconnectTimeoutRef = useRef(null);
@@ -43,6 +44,7 @@ export const WebSocketProvider = ({ children }) => {
               
               if (data.messageType === 'panel') {
                 setPanelInfo({ width: data.width, height: data.height });
+                setIsInitialized(true); // Mark as initialized when we get panel info
               } else if (data.messageType === 'shapes' || data.shapes) {
                 const shapeList = data.shapes || [];
                 setShapes(shapeList);
@@ -115,6 +117,8 @@ export const WebSocketProvider = ({ children }) => {
     setIsConnected(false);
     setShapes([]);
     setStats({ total: 0, moving: 0 });
+    setPanelInfo(null);
+    setIsInitialized(false);
   }, []);
   
   const updateShapes = useCallback(async (circles, squares, triangles) => {
@@ -155,7 +159,8 @@ export const WebSocketProvider = ({ children }) => {
     panelInfo,
     stats,
     updateShapes,
-    reconnect: connectWebSocket
+    reconnect: connectWebSocket,
+    isInitialized
   };
   
   return (

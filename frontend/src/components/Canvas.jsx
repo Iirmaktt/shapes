@@ -3,13 +3,18 @@ import { useWebSocket } from '../context/WebSocketContext';
 import Shape from './Shape';
 
 const Canvas = memo(() => {
-  const { shapes, panelInfo } = useWebSocket();
+  const { shapes, panelInfo, isInitialized, isConnected } = useWebSocket();
   
   const renderedShapes = useMemo(() => {
     return shapes.map(shape => (
       <Shape key={shape.id} shape={shape} />
     ));
   }, [shapes]);
+  
+  // Show loading until we get panel info and are connected
+  if (!isInitialized || !isConnected || !panelInfo) {
+    return <div>Loading panel info...</div>;
+  }
   
   const canvasStyle = {
     width: `${panelInfo.width}px`,
@@ -18,10 +23,6 @@ const Canvas = memo(() => {
     border: '1px solid black',
     overflow: 'hidden',
   };
-  
-  if (shapes.length === 0) {
-    return <div>Waiting for shapes...</div>;
-  }
   
   return (
     <div>

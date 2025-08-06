@@ -1,13 +1,11 @@
 package com.simsoft.shapes.controller;
 
-import com.simsoft.shapes.model.Shape;
 import com.simsoft.shapes.service.ShapeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,15 +31,5 @@ public class ShapeController {
         response.put("totalShapes", circles + rects + triangles);
         
         return ResponseEntity.ok(response);
-    }
-    
-    @GetMapping("/shapes")
-    public ResponseEntity<List<Shape>> getShapes() {
-        return ResponseEntity.ok(shapeService.getAllShapes());
-    }
-    
-    @GetMapping("/panel")
-    public ResponseEntity<Object> getPanelInfo() {
-        return ResponseEntity.ok(shapeService.getPanelInfo());
     }
 }

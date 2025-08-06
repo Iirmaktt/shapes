@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useWebSocket } from '../context/WebSocketContext';
 
 const Controls = () => {
-  const { updateShapes, stats } = useWebSocket();
+  const { updateShapes, stats, isInitialized } = useWebSocket();
   const [circles, setCircles] = useState(3);
   const [squares, setSquares] = useState(3);
   const [triangles, setTriangles] = useState(3);
@@ -18,6 +18,10 @@ const Controls = () => {
       setIsUpdating(false);
     }
   };
+  
+  if (!isInitialized) {
+    return <div>Loading controls...</div>;
+  }
   
   return (
     <div>
