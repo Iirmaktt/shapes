@@ -1,0 +1,32 @@
+.DS_Store
+.vscode/
+.idea/
+
+# Backend
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/src/test/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Logs
+*.log
+logs/
+
+# Runtime
+*.pid
+*.seed
+*.lock
+
+# Dependencies
+node_modules/
+target/
