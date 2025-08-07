@@ -7,10 +7,10 @@ import Header from './components/Header';
 import Controls from './components/Controls';
 import Canvas from './components/Canvas';
 
-/**
- * Ana uygulama bileşeni
- * Tüm diğer bileşenleri WebSocket context'i içinde sarmallar
- */
+
+
+//context provider ile tüm alt bileşenleri sarmaladık
+//tek bir yerden yönetme socket
 function App() {
   return (
     // WebSocket bağlantısını tüm alt bileşenlerle paylaş

@@ -19,7 +19,7 @@ const Shape = memo(({ shape }) => {
     const element = shapeRef.current;
     if (element) {
       // CSS transform kullanarak pozisyon güncelle (GPU hızlandırmalı)
-      element.style.transform = `translate(${shape.x}px, ${shape.y}px)`;
+      element.style.transform = `translate(${shape.x}px, ${shape.y}px)`; // x ve y geldiğinde değiştirmeyi çalışıyorux
     }
   }, [shape.x, shape.y]); // Sadece x, y değiştiğinde çalıştır
   

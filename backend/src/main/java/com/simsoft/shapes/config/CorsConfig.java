@@ -11,20 +11,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration // Spring konfigürasyon sınıfı
 public class CorsConfig implements WebMvcConfigurer {
     
-    /**
-     * CORS mapping'lerini ekler
-     * Frontend'in backend API'lerine erişmesine izin verir
-     */
+    
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Tüm endpoint'ler için CORS etkinleştir
-                // İzin verilen frontend adresleri
+        registry.addMapping("/**") 
+               
                 .allowedOrigins("http://localhost:3000", "http://localhost:5173")
-                // İzin verilen HTTP metodları
+                
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                // Tüm header'lara izin ver
+                
                 .allowedHeaders("*")
-                // Çerezlerin gönderilmesine izin ver
+                
                 .allowCredentials(true);
     }
 }

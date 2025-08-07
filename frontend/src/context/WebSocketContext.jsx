@@ -5,7 +5,7 @@ import SockJS from 'sockjs-client';
 // STOMP protokolü için (WebSocket üzerinde mesajlaşma)
 import Stomp from 'stompjs';
 
-// WebSocket verilerini paylaşmak için React Context oluştur
+//context oluşturduk web socket için
 const WebSocketContext = createContext(null);
 
 /**
@@ -14,7 +14,7 @@ const WebSocketContext = createContext(null);
  * @returns {Object} WebSocket context değerleri
  */
 export const useWebSocket = () => {
-  const context = useContext(WebSocketContext);
+  const context = useContext(WebSocketContext); //kendi hookumuzu kullanıyoruz contexti kullaanmak için.
   if (!context) {
     // Eğer hook Provider dışında kullanılırsa hata fırlat
     throw new Error('useWebSocket must be used within a WebSocketProvider');
@@ -33,14 +33,14 @@ export const WebSocketProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);        // Bağlantı durumu
   const [shapes, setShapes] = useState([]);                     // Şekiller listesi
   const [panelInfo, setPanelInfo] = useState(null);             // Panel boyutları (null = henüz gelmedi)
-  const [stats, setStats] = useState({ total: 0, moving: 0 }); // İstatistikler
+  const [stats, setStats] = useState({ total: 0, moving: 0 }); // kaç tane şekil var kaç tane hareketli var
   const [isInitialized, setIsInitialized] = useState(false);   // Panel bilgisi geldi mi?
   
   // Ref'ler (component yaşam döngüsü boyunca kalıcı değerler)
   const stompClientRef = useRef(null);        // STOMP client referansı
   const reconnectTimeoutRef = useRef(null);   // Yeniden bağlanma zamanlayıcısı
   const reconnectAttempts = useRef(0);        // Yeniden bağlanma deneme sayısı
-  
+  //bu fonk içeriği tekrar tekrar çalıştırılmasın re-render olmasın diye
   const connectWebSocket = useCallback(() => {
     try {
       const socket = new SockJS('http://localhost:8080/ws/shapes');
@@ -55,7 +55,7 @@ export const WebSocketProvider = ({ children }) => {
           setIsConnected(true);
           reconnectAttempts.current = 0;
           
-          // Subscribe to shape updates
+         //kanala göre ayrı ayrı Listener yazıyo bir kanaldayız ifle kontrol
           stompClient.subscribe('/topic/shapes', (message) => {
             try {
               const data = JSON.parse(message.body);
@@ -76,7 +76,7 @@ export const WebSocketProvider = ({ children }) => {
             }
           });
           
-          // Request initial data
+          // frontend backend gönderme kanalı 2 kanal açmış
           stompClient.send('/app/connect', {}, JSON.stringify({}));
         },
         (error) => {

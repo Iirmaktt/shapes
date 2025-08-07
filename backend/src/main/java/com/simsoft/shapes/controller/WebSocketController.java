@@ -32,14 +32,11 @@ public class WebSocketController {
         shapeService.sendPanelInfo();
     }
     
-    /**
-     * İstemci açık olarak bağlantı isteği gönderdiğinde çağrılır
-     * /app/connect adresine gelen mesajları yakalar
-     */
+    //socket kontrolü direkt event listener ile yapıldı
     @MessageMapping("/connect") // WebSocket mesaj yönlendirmesi
     @SendTo("/topic/shapes")    // Yanıtı /topic/shapes kanalına gönder
     public void handleConnect() {
-        // İstemci manuel bağlantı talebinde panel bilgilerini gönder
-        shapeService.sendPanelInfo();
+        
+        shapeService.sendPanelInfo(); // panel boyutu gelir ilk bağlantıda
     }
 }

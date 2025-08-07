@@ -140,7 +140,7 @@ public class ShapeService {
         
         // Tüm şekilleri WebSocket üzerinden yayınla (değişenler + değişmeyenler)
         ShapeData shapeData = new ShapeData(new ArrayList<>(shapes.values()));
-        messagingTemplate.convertAndSend("/topic/shapes", shapeData);
+        messagingTemplate.convertAndSend("/topic/shapes", shapeData); //sockete send etmiş
     }
     
     /**

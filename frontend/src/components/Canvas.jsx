@@ -14,10 +14,7 @@ const Canvas = memo(() => {
   // WebSocket context'inden şekiller, panel bilgileri ve başlatma durumunu al
   const { shapes, panelInfo, isInitialized, isConnected } = useWebSocket();
   
-  /**
-   * Şekilleri render etmek için memoized liste
-   * Şekiller değişmediğinde yeniden oluşturulmaz (performans optimizasyonu)
-   */
+  
   const renderedShapes = useMemo(() => {
     return shapes.map(shape => (
       // Her şekil için benzersiz key ve şekil verisini geç
@@ -25,10 +22,7 @@ const Canvas = memo(() => {
     ));
   }, [shapes]); // Sadece shapes değiştiğinde yeniden hesapla
   
-  /**
-   * Panel bilgileri gelmeden veya bağlantı yokken yükleme mesajı göster
-   * Bu, sunucudan panel boyutları alınana kadar render'ı önler
-   */
+ 
   if (!isInitialized || !isConnected || !panelInfo) {
     return <div>Loading panel info...</div>;
   }
